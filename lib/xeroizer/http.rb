@@ -104,15 +104,8 @@ module Xeroizer
             when :put   then    client.put(uri.request_uri, raw_body, headers)
           end
 
-          if self.logger
-            logger.info("== [#{Time.now.to_s}] XeroGateway Response (#{response.code})")
-
-            unless response.code.to_i == 200
-              logger.info("== #{uri.request_uri} Response Body \n\n #{response.plain_body} \n == End Response Body")
-            else
-              logger.debug("== #{uri.request_uri} Response Body \n\n #{response.plain_body} \n == End Response Body")
-            end
-          end
+          log_response(response, uri)
+          after_request.call(request_info, response) if after_request
 
           case response.code.to_i
             when 200
