@@ -98,6 +98,8 @@ module Xeroizer
 
           raw_body = params.delete(:raw_body) ? body : {:xml => body}
 
+          logger.info("REQUEST XML: #{raw_body}")
+
           response = case method
             when :get   then    client.get(uri.request_uri, headers)
             when :post  then    client.post(uri.request_uri, raw_body, headers)
@@ -175,7 +177,7 @@ module Xeroizer
         # doc = REXML::Document.new(raw_response, :ignore_whitespace_nodes => :all)
         doc = Nokogiri::XML(raw_response)
 
-        if doc && doc.root && doc.root.name == "ApiException"
+        if doc && doc.root && (doc.root.name == "ApiException" || doc.root.name == 'Response')
 
           raise ApiException.new(doc.root.xpath("Type").text,
                                  doc.root.xpath("Message").text,
