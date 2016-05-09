@@ -98,8 +98,6 @@ module Xeroizer
 
           raw_body = params.delete(:raw_body) ? body : {:xml => body}
 
-          logger.info("REQUEST XML: #{raw_body}")
-
           response = case method
             when :get   then    client.get(uri.request_uri, headers)
             when :post  then    client.post(uri.request_uri, raw_body, headers)
