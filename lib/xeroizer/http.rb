@@ -94,7 +94,7 @@ module Xeroizer
 
         begin
           attempts += 1
-          logger.info("XeroGateway Request: #{method.to_s.upcase} #{uri.request_uri}") if self.logger
+          logger.info("XeroGateway Request: #{method.to_s.upcase} #{uri.request_uri}\nBody:#{body}") if self.logger
 
           raw_body = params.delete(:raw_body) ? body : {:xml => body}
 

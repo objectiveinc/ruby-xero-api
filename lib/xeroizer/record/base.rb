@@ -136,6 +136,21 @@ module Xeroizer
           Hash[attrs]
         end
 
+        def encode_with(coder)
+          if @attributes
+            coder[:attributes] = @attributes
+          end
+        end
+
+        def init_with(coder)
+          @attributes = {}
+          coder[:attributes].each do |attr, value|
+            self[attr] = value
+          end
+
+          self
+        end
+
         def inspect
           attribute_string = self.attributes.collect do |attr, value|
             "#{attr.inspect}: #{value.inspect}"
