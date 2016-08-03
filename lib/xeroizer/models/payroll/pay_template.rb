@@ -16,6 +16,7 @@ module Xeroizer
 
         # US Payroll fields
         has_many      :benefit_lines
+        has_many      :time_off_lines
 
       end
 
